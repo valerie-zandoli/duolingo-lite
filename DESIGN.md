@@ -31,7 +31,7 @@ existing token/class covers it, or it belongs in `tokens.css` /
 | `--ink` / `--ink-soft` / `--ink-faint` | Primary / secondary / tertiary text |
 | `--line` / `--line-strong` | Borders |
 | `--control-border` | Border of an interactive control such as an answer choice: 3:1 against the card in both themes |
-| `--accent` / `--accent-deep` / `--accent-wash` | Brand green — buttons, links, the Spanish word itself |
+| `--accent` / `--accent-deep` / `--accent-wash` | Brand green — buttons, links, the Spanish word itself. Derived from Duolingo's own Feather Green (`--accent-brand`, `#58cc02`), darkened where needed to keep the app's own 3:1/4.5:1 contrast tests passing — see the comment at the top of `tokens.css` |
 | `--good` / `--bad` | **Semantic only** — correct/incorrect answer feedback. Don't reuse these as decorative color; they mean something specific to the learner. |
 | `--xp` | The XP reward pill on the completion screen (P2) |
 
@@ -42,9 +42,12 @@ in one theme.
 
 ## Type
 
-- **Display** (`--font-display`, Bricolage Grotesque) — headings, the
-  Spanish word on the question screen, the completion score.
-- **Body** (`--font-body`, Instrument Sans) — everything else.
+- **Display** (`--font-display`, Baloo 2) — headings, the Spanish word on
+  the question screen, the completion score.
+- **Body** (`--font-body`, Nunito) — everything else. Both are rounded,
+  geometric Google Fonts chosen to evoke Duolingo's DIN Next Rounded
+  without using that (licensed) font or Duolingo's own logo typeface —
+  see `tokens.css`.
 - **Mono** (`--font-mono`, Space Mono) — the progress count (`3/5`) and
   the completion score, anywhere digits line up.
 
