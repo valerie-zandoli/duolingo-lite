@@ -23,6 +23,7 @@ then edge cases. Status reflects a full run against `main` after
 | Completion animation | Trophy pop, XP count-up, rows rising in, confetti for 3/5 or better | ✅ Pass |
 | Keys 1–4 | Pick the matching answer before checking; ignored after | ✅ Pass |
 | Click "Try again" | Returns to question 1 with score/progress reset | ✅ Pass |
+| [P0] RuneSpeak link | "Continue in RuneSpeak" link on the completion screen, after Try again, opens https://wiltobuild.github.io/RuneSpeak/ in a new tab (`target="_blank" rel="noopener noreferrer"`), present at every score | ✅ Pass |
 | Refresh mid-lesson | Fresh lesson loads, no broken screen | ✅ Pass |
 | Phone width (~375px) | No horizontal overflow, choices/progress bar readable | ✅ Pass |
 
