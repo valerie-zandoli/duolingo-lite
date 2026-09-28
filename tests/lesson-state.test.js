@@ -22,6 +22,9 @@ import {
   checkAnswer,
   nextQuestion,
   restart,
+  xpForLesson,
+  XP_FOR_COMPLETING,
+  XP_PER_CORRECT,
 } from "../js/state/lesson-state.js";
 import { QUESTIONS } from "../js/data/questions.js";
 
@@ -187,4 +190,43 @@ test("selecting does nothing once the lesson is complete", () => {
   let s = fresh();
   for (let i = 0; i < 5; i++) s = answer(s, true);
   assert.equal(selectChoice(s, 0), s);
+});
+
+// --- answer review and XP (completion screen, PRD [P2]) --------------------------
+
+test("records each checked answer, in order, for the completion review", () => {
+  let s = fresh();
+  s = answer(s, true);
+  s = answer(s, false);
+  assert.equal(s.answers.length, 2);
+  assert.equal(s.answers[0].correct, true);
+  assert.equal(s.answers[0].choiceIndex, QUESTIONS[0].choices.indexOf(QUESTIONS[0].correct));
+  assert.equal(s.answers[1].correct, false);
+  assert.notEqual(QUESTIONS[1].choices[s.answers[1].choiceIndex], QUESTIONS[1].correct);
+});
+
+test("a finished lesson has exactly one answer per question, matching the score", () => {
+  let s = fresh();
+  for (const pick of [true, false, true, true, false]) s = answer(s, pick);
+  assert.equal(s.answers.length, 5);
+  assert.equal(s.answers.filter((a) => a.correct).length, s.score);
+  assert.equal(s.score, 3);
+});
+
+test("submitting twice records the answer only once", () => {
+  let s = checkAnswer(selectChoice(fresh(), 0));
+  s = checkAnswer(s);
+  assert.equal(s.answers.length, 1);
+});
+
+test("restart clears the recorded answers", () => {
+  let s = fresh();
+  for (let i = 0; i < 5; i++) s = answer(s, true);
+  assert.deepEqual(restart(s).answers, []);
+});
+
+test("[P2] lesson XP is a flat reward plus a little per correct answer", () => {
+  assert.equal(xpForLesson(0), XP_FOR_COMPLETING);
+  assert.equal(xpForLesson(5), XP_FOR_COMPLETING + 5 * XP_PER_CORRECT);
+  assert.ok(xpForLesson(3) > xpForLesson(2), "more correct answers earn more XP");
 });

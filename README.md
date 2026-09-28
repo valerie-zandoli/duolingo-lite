@@ -22,7 +22,13 @@ dependencies to install.
 
 ## Status
 
-Project scaffolding is in place: design system, shared question data,
-the lesson state machine, and stubbed-but-wired UI screens. Each
-screen's remaining work is marked with `TODO(<owner>)` comments in its
-file — see [CONTRIBUTING.md](CONTRIBUTING.md) for who owns what.
+Feature-complete for the one-week build: all P0 and P1 requirements,
+plus the P2 XP reward and XP total kept on this device. A learner
+answers five questions with instant feedback and a live progress bar,
+then gets a completion screen that reviews every word, awards XP, and
+adds it to their running total.
+
+Live: <https://wiltobuild.github.io/duolingo-lite/> · Tests: see
+[tests/README.md](tests/README.md) · Demo checklist:
+[DEMO_TEST_CHECKLIST.md](DEMO_TEST_CHECKLIST.md) · Who owns what:
+[CONTRIBUTING.md](CONTRIBUTING.md)

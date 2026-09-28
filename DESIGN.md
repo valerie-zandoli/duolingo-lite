@@ -60,7 +60,10 @@ screen uses them:
 - `.visually-hidden` — text for screen readers only, e.g. "(correct answer)" on a choice (shared utility)
 - `.feedback-banner` (+ `--correct` / `--incorrect` modifiers) — feedback (Priscilla)
 - `.btn-primary` — the Check / Continue / Try again button, shared
-- `.completion`, `.completion__score`, `.xp-pill` — completion screen (Priscilla)
+- `.lesson-header` (+ `__title`, `__xp`) — the card header: lesson name and running XP total (Wil, app.js)
+- `.completion` (+ `__trophy`, `__title`, `__message`, `__score`, `__caption`, `__xp`, `__xp-total`, `__review-title`), `.xp-pill` — completion screen (Priscilla)
+- `.review-list`, `.review-item` (+ `--correct` / `--wrong`, `__mark`, `__word`, `__answer`, `__picked`) — the per-question review on the completion screen (Priscilla)
+- `.confetti`, `.confetti__piece` — the completion burst; decorative, hidden from screen readers and under reduced motion (Priscilla)
 
 ## Responsive & accessibility
 
@@ -70,4 +73,8 @@ screen uses them:
   already handled globally in `base.css` (`:focus-visible`), don't
   override it away.
 - Respect `prefers-reduced-motion` (already handled globally) if you add
-  any new animation.
+  any new animation. Anything that *starts* hidden and animates in must
+  still be readable with animations off (the confetti rests invisible and
+  is `display: none` under reduced motion; the review rows rest visible).
+  JavaScript-driven motion, like the XP count-up, has to check the media
+  query itself — base.css only stops CSS animations.
