@@ -10,6 +10,11 @@
  * Done:
  *   [P0] Score out of five (state.score / state.questions.length).
  *   [P0] "Try again" restarts the lesson (onRestart).
+ *   [P0] A link to RuneSpeak (the Week 2 improvement, PRD-approved
+ *        2026-09-28), for continued, replayable practice past this fixed
+ *        five-question lesson. Opens in a new tab, so "Try again" is
+ *        still here when the learner comes back. RUNESPEAK_URL below is
+ *        the only thing to change if that address ever moves.
  *   [P2] XP reward for the lesson, and the running total kept on this
  *        device (xp.earned, xp.total).
  *   A review of every question: the Spanish word, the right answer, and
@@ -26,6 +31,10 @@ const CONFETTI_PIECES = 26;
 // Decorative palette, from tokens only (never --good/--bad: those mean something)
 const CONFETTI_COLORS = ["--accent", "--xp", "--accent-deep", "--line-strong"];
 const COUNT_UP_MS = 900;
+// Week 2 improvement (PRD: docs.google.com/document/d/1zWRTaSH69uaIUsaz6pVFhnmsXQGaR7m3rruMeO9naYU).
+// Separate app, separate repo (wiltobuild/RuneSpeak) — this is the only
+// place this clone references it.
+const RUNESPEAK_URL = "https://wiltobuild.github.io/RuneSpeak/";
 
 export function renderCompletionScreen(state, container, { onRestart, xp }) {
   const total = state.questions.length;
@@ -49,6 +58,12 @@ export function renderCompletionScreen(state, container, { onRestart, xp }) {
       </ol>
 
       <button class="btn-primary" type="button" data-role="restart-btn">Try again</button>
+      <a
+        class="btn-secondary"
+        href="${RUNESPEAK_URL}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Continue in RuneSpeak <span aria-hidden="true">↗</span><span class="visually-hidden">(opens in a new tab)</span></a>
     </section>
   `;
 
