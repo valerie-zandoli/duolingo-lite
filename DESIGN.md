@@ -60,6 +60,7 @@ screen uses them:
 - `.visually-hidden` — text for screen readers only, e.g. "(correct answer)" on a choice (shared utility)
 - `.feedback-banner` (+ `--correct` / `--incorrect` modifiers) — feedback (Priscilla)
 - `.btn-primary` — the Check / Continue / Try again button, shared
+- `.btn-secondary` — an outlined, text-only action beside the primary one, e.g. the completion screen's link to RuneSpeak (shared; keep `.btn-primary` the only filled button on a screen)
 - `.lesson-header` (+ `__title`, `__xp`) — the card header: lesson name and running XP total (Wil, app.js)
 - `.completion` (+ `__trophy`, `__title`, `__message`, `__score`, `__caption`, `__xp`, `__xp-total`, `__review-title`), `.xp-pill` — completion screen (Priscilla)
 - `.review-list`, `.review-item` (+ `--correct` / `--wrong`, `__mark`, `__word`, `__answer`, `__picked`) — the per-question review on the completion screen (Priscilla)
