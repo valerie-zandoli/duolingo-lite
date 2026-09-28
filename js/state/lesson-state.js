@@ -16,8 +16,19 @@
  *     selectedChoice: number | null,  // index into current question's choices
  *     checked: boolean,       // has the current answer been submitted?
  *     lastAnswerCorrect: boolean | null,
+ *     answers: { choiceIndex: number, correct: boolean }[],
+ *                             // one entry per checked question, in order —
+ *                             // what the completion screen reviews
  *   }
  */
+
+/** [P2] XP for finishing a lesson: a flat reward plus a little per correct answer. */
+export const XP_FOR_COMPLETING = 10;
+export const XP_PER_CORRECT = 2;
+
+export function xpForLesson(score) {
+  return XP_FOR_COMPLETING + XP_PER_CORRECT * score;
+}
 
 export function createLessonState(questions) {
   return {
@@ -27,6 +38,7 @@ export function createLessonState(questions) {
     selectedChoice: null,
     checked: false,
     lastAnswerCorrect: null,
+    answers: [],
   };
 }
 
@@ -67,6 +79,7 @@ export function checkAnswer(state) {
     checked: true,
     lastAnswerCorrect: correct,
     score: correct ? state.score + 1 : state.score,
+    answers: [...state.answers, { choiceIndex: state.selectedChoice, correct }],
   };
 }
 

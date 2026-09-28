@@ -19,19 +19,31 @@ import {
   nextQuestion,
   restart,
   isComplete,
+  xpForLesson,
 } from "./state/lesson-state.js";
+import { createXpStore } from "./state/xp-store.js";
 import { renderQuestionScreen } from "./ui/question-screen.js";
 import { renderFeedback } from "./ui/feedback.js";
 import { renderCompletionScreen } from "./ui/completion-screen.js";
 
 const root = document.getElementById("app");
+const xpStore = createXpStore();
 
 let state = createLessonState(QUESTIONS);
+/** XP awarded for the lesson just finished: { earned, previous, total }, or null. */
+let reward = null;
 
 function render() {
+  const totalXp = xpStore.total();
   root.innerHTML = `
     <div class="app-shell">
       <div class="card">
+        <header class="card__header lesson-header">
+          <h1 class="lesson-header__title">Spanish · Beginner words</h1>
+          <span class="lesson-header__xp" aria-label="Total XP: ${totalXp}">
+            <span aria-hidden="true">⚡</span> ${totalXp} XP
+          </span>
+        </header>
         <div class="card__body" data-role="screen"></div>
       </div>
     </div>
@@ -40,13 +52,18 @@ function render() {
   const screen = root.querySelector("[data-role='screen']");
 
   if (isComplete(state)) {
-    renderCompletionScreen(state, screen, { onRestart: handleRestart });
+    renderCompletionScreen(state, screen, { onRestart: handleRestart, xp: reward });
     return;
   }
 
+  // The primary button's job is fixed when it is rendered: Check before
+  // the answer is checked, Continue after. Binding the handler here
+  // (instead of re-pointing the button afterwards) means one click runs
+  // exactly one handler and one render, and a stale, already-replaced
+  // button can never act on the next question.
   renderQuestionScreen(state, screen, {
     onSelectChoice: handleSelectChoice,
-    onCheck: handleCheck,
+    onCheck: state.checked ? handleNext : handleCheck,
   });
 
   const feedbackHtml = renderFeedback(state);
@@ -54,17 +71,9 @@ function render() {
     screen.insertAdjacentHTML("beforeend", feedbackHtml);
   }
 
-  // Once checked, the Check button becomes "Continue" and advances
-  // instead of re-checking. TODO(Valerie/Priscilla): wire this into
-  // your rendered button once the checked-state styling is in place —
-  // for now this keeps the flow usable end to end.
   if (state.checked) {
     const btn = screen.querySelector("[data-role='check-btn']");
-    if (btn) {
-      btn.textContent = state.index === state.questions.length - 1 ? "See results" : "Continue";
-      btn.disabled = false;
-      btn.onclick = handleNext;
-    }
+    btn.textContent = state.index === state.questions.length - 1 ? "See results" : "Continue";
   }
 }
 
@@ -80,12 +89,31 @@ function handleCheck() {
 
 function handleNext() {
   state = nextQuestion(state);
+  // Award once, on the move into the completion screen. A second click
+  // on a stale Continue button leaves `state` unchanged and `reward` set.
+  if (isComplete(state) && reward === null) {
+    const earned = xpForLesson(state.score);
+    reward = { earned, ...xpStore.add(earned) };
+  }
   render();
 }
 
 function handleRestart() {
   state = restart(state);
+  reward = null;
   render();
 }
+
+// Number keys 1–4 pick an answer, as in the PRD demo. Enter and Space
+// already press whichever button has focus, so they need nothing here.
+document.addEventListener("keydown", (event) => {
+  if (event.altKey || event.ctrlKey || event.metaKey || event.repeat) return;
+  if (isComplete(state) || state.checked) return;
+  const n = Number.parseInt(event.key, 10);
+  if (n >= 1 && n <= state.questions[state.index].choices.length) {
+    event.preventDefault();
+    handleSelectChoice(n - 1);
+  }
+});
 
 render();

@@ -29,6 +29,7 @@ js/
   app.js                  integration — wires state + UI together
   data/questions.js       shared lesson content
   state/lesson-state.js   the lesson state machine (pure functions, no DOM)
+  state/xp-store.js       running XP total, saved in localStorage (no DOM)
   ui/
     question-screen.js    question + choices + progress bar
     feedback.js           correct/incorrect banner
@@ -39,7 +40,7 @@ js/
 
 | Area | Owner | Files |
 |---|---|---|
-| Lesson state, answer checking, integration, release | **Wil** (lead) | `js/state/`, `js/app.js` |
+| Lesson state, answer checking, XP, integration, release | **Wil** (lead) | `js/state/`, `js/app.js` |
 | Question screen, choice controls, progress bar, responsive layout | **Valerie** | `js/ui/question-screen.js`, `css/components.css` (choice/progress classes) |
 | Spanish content, feedback + completion screens, accessibility, demo test checklist | **Priscilla** | `js/data/questions.js`, `js/ui/feedback.js`, `js/ui/completion-screen.js` |
 
