@@ -117,6 +117,8 @@ test("[keyboard] number keys 1–4 pick an answer, and do nothing once it is che
     const press = (key) => app.doc.dispatchEvent(new app.win.KeyboardEvent("keydown", { key, bubbles: true }));
     press("3");
     eq(app.qa(".choice")[2].classList.contains("choice--selected"), true, "3 selects the third choice");
+    eq(app.doc.activeElement, app.q("[data-role='check-btn']"), "focus moves to Check, so Enter checks the answer next");
+    eq(app.doc.activeElement.disabled, false, "Check is focused and enabled, not stuck disabled");
     press("1");
     eq(app.qa(".choice")[0].classList.contains("choice--selected"), true, "the pick can change");
     press("9");
