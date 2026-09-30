@@ -2,6 +2,7 @@
   "name": "duolingo-lite",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "A five-question interactive Spanish practice lesson — one-week team build.",
   "scripts": {
     "dev": "npx --yes serve@14.2.6 . -l 5173"
