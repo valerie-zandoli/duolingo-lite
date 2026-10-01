@@ -32,3 +32,5 @@ Live: <https://wiltobuild.github.io/duolingo-lite/> · Tests: see
 [tests/README.md](tests/README.md) · Demo checklist:
 [DEMO_TEST_CHECKLIST.md](DEMO_TEST_CHECKLIST.md) · Who owns what:
 [CONTRIBUTING.md](CONTRIBUTING.md)
+
+**Week 2 improvement:** [RuneSpeak](https://github.com/wiltobuild/RuneSpeak), a replayable Spanish dungeon run built by Wil, linked from this lesson's completion screen. Play it at <https://wiltobuild.github.io/RuneSpeak/>.
