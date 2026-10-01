@@ -127,3 +127,28 @@ test("[keyboard] number keys 1–4 pick an answer, and do nothing once it is che
     eq(app.qa(".choice--selected").length, 0, "no selection after checking");
     assert(app.qa(".choice").every((b) => b.disabled));
   }));
+
+test("[P0] the completion screen links to RuneSpeak, safely, in a new tab", () =>
+  withFreshXp(async (app) => {
+    finish(app, [true, false, true, false, true]);
+    const link = app.q("a.btn-secondary");
+    assert(link, "a link exists on the completion screen");
+    eq(link.getAttribute("href"), "https://wiltobuild.github.io/RuneSpeak/");
+    eq(link.getAttribute("target"), "_blank", "opens in a new tab, so Try again is still here on return");
+    eq(link.getAttribute("rel"), "noopener noreferrer", "the new tab cannot reach back into this page");
+    assert(link.textContent.includes("RuneSpeak"), "the link names its destination");
+
+    const buttons = [...app.q(".completion").querySelectorAll("button, a")];
+    eq(buttons[0].dataset.role, "restart-btn", "Try again comes first");
+    eq(buttons[1], link, "the RuneSpeak link comes second, after the primary action");
+  }));
+
+test("the RuneSpeak link appears regardless of score", () =>
+  withFreshXp(async (app) => {
+    finish(app, [true, true, true, true, true]);
+    assert(app.q("a.btn-secondary"), "present on a perfect run");
+
+    app.q("[data-role='restart-btn']").click();
+    finish(app, [false, false, false, false, false]);
+    assert(app.q("a.btn-secondary"), "present on an all-wrong run too");
+  }));

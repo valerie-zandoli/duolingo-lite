@@ -218,6 +218,32 @@
   cursor: not-allowed;
 }
 
+/* Secondary action — a step alongside the primary one, not competing with
+   it: text-only, no fill, so .btn-primary is still the one clear default. */
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 100%;
+  margin-top: var(--space-3);
+  font-weight: 700;
+  font-size: 14px;
+  border: 1.5px solid var(--control-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  color: var(--ink);
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+}
+
 /* Lesson header (title + running XP total) — owner: Wil (app.js) */
 .lesson-header {
   display: flex;
