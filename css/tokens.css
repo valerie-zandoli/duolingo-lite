@@ -1,9 +1,26 @@
 /*
   Design tokens — Duolingo LITE
   Source of truth for color, type, spacing, and radius across the app.
-  Mirrors the palette used in the team's PRD artifact so the shipped UI
-  matches what was pitched. Don't hardcode colors/fonts in component
-  files — add a token here and reference it instead.
+  Don't hardcode colors/fonts in component files — add a token here and
+  reference it instead.
+
+  Brand colors and typography (2026-09-28, Valerie): --accent/--accent-deep
+  are derived from Duolingo's own published "Feather Green" (#58CC02), and
+  --font-display/--font-body are rounded typefaces chosen to evoke
+  Duolingo's DIN Next Rounded. Two things are deliberately NOT copied:
+  the literal DIN Next Rounded font (Monotype-licensed, not freely
+  embeddable) and "Feather Bold" (Duolingo's custom logo typeface, its
+  letterforms drawn from the Duo owl mascot). No Duolingo logo, mascot,
+  or wordmark appears anywhere in this app.
+  Note: full-brightness #58CC02 itself does not clear the WCAG 1.4.11
+  3:1 non-text contrast this app already tests for (2.09:1 against a
+  white card), so --accent is a readable shade of the same hue rather
+  than the literal hex; it still comes back to the true brand green in
+  dark mode, where the dark surface gives it 7.74:1 of headroom.
+  This is a partial step past the Week 1 PRD's own Non-Goals ("Duolingo
+  branding ... outside the demo") — flagged to Wil and Priscilla in
+  Slack for visibility, since this file is what every screen renders
+  from.
 */
 
 :root {
@@ -19,16 +36,19 @@
   /* Border of an interactive control: 3:1 against the card (WCAG 1.4.11) */
   --control-border: #8a948c;
 
-  /* Color — accent (brand) */
-  --accent: #37a06a;
-  --accent-deep: #2b7f54;
-  --accent-wash: #e7f3ec;
+  /* Color — accent (brand): Duolingo's Feather Green (#58CC02), see the
+     file header. --accent-brand is the literal, unmodified brand hex —
+     decorative use only (nothing needing contrast reads its own color). */
+  --accent-brand: #58cc02;
+  --accent: #47a402;
+  --accent-deep: #398501;
+  --accent-wash: #eefae6;
   /* Fixed (theme-invariant) — for white text on an accent background, e.g.
      .btn-primary. --accent/--accent-deep swap direction between themes
      (lighter in dark mode for text emphasis), so neither reliably clears
      4.5:1 for white text in both themes; this one does, in both. */
-  --accent-contrast: #2c8256;
-  --accent-contrast-deep: #226442;
+  --accent-contrast: #398501;
+  --accent-contrast-deep: #2d6701;
 
   /* Color — semantic (answer feedback, not the brand accent) */
   --good: #247b3e;
@@ -42,9 +62,12 @@
   --shadow: 0 1px 2px rgba(26, 36, 32, 0.05), 0 8px 24px -12px rgba(26, 36, 32, 0.18);
   --shadow-lift: 0 2px 4px rgba(26, 36, 32, 0.06), 0 18px 40px -18px rgba(26, 36, 32, 0.28);
 
-  /* Type */
-  --font-display: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Type — rounded, geometric sans, evoking Duolingo's DIN Next Rounded
+     (a licensed Monotype font, not used directly). Baloo 2 and Nunito are
+     free, Google-Fonts alternatives with the same rounded-terminal feel;
+     see the file header for what is deliberately not copied. */
+  --font-display: "Baloo 2", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", monospace;
 
   /* Spacing scale (4px base) */
@@ -76,9 +99,10 @@
     --line-strong: #3a4649;
     --control-border: #6b7a75;
 
-    --accent: #4fc088;
-    --accent-deep: #6fd0a0;
-    --accent-wash: #182c23;
+    --accent-brand: #58cc02;
+    --accent: #58cc02;
+    --accent-deep: #8adb4e;
+    --accent-wash: #1a2e17;
 
     --good: #4fc088;
     --good-wash: #152a1f;
@@ -104,9 +128,10 @@
   --line-strong: #3a4649;
   --control-border: #6b7a75;
 
-  --accent: #4fc088;
-  --accent-deep: #6fd0a0;
-  --accent-wash: #182c23;
+  --accent-brand: #58cc02;
+  --accent: #58cc02;
+  --accent-deep: #8adb4e;
+  --accent-wash: #1a2e17;
 
   --good: #4fc088;
   --good-wash: #152a1f;
