@@ -113,6 +113,13 @@ document.addEventListener("keydown", (event) => {
   if (n >= 1 && n <= state.questions[state.index].choices.length) {
     event.preventDefault();
     handleSelectChoice(n - 1);
+    // A mouse click or Tab leaves focus on the choice itself, which
+    // restoreFocus() in question-screen.js preserves on purpose. This
+    // shortcut has no prior focused element to preserve, and a learner
+    // who just pressed a number expects the next keystroke (Enter) to
+    // check the answer, not re-toggle the same choice. Send focus to
+    // Check instead.
+    document.querySelector("[data-role='check-btn']")?.focus();
   }
 });
 
